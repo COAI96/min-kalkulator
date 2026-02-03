@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Min kalkulator</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f2f2f2;
+      text-align: center;
+      padding-top: 50px;
+    }
+    .box {
+      background: pink;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      margin: auto;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 90%;
+      padding: 8px;
+      margin: 5px 0;
+    }
+    button {
+      padding: 10px;
+      margin: 5px;
+      width: 45%;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Kalkulator</h2>
+
+  <input type="number" id="tall1" placeholder="Tall 1">
+  <input type="number" id="tall2" placeholder="Tall 2">
+
+  <br>
+
+  <button onclick="regn('+')">+</button>
+  <button onclick="regn('-')">-</button>
+  <button onclick="regn('*')">*</button>
+  <button onclick="regn('/')">/</button>
+
+  <p id="resultat"></p>
+</div>
+
+<script>
+function regn(operator) {
+  let a = Number(document.getElementById("tall1").value);
+  let b = Number(document.getElementById("tall2").value);
+  let resultat;
+
+  if(operator === '+') resultat = a + b;
+  if(operator === '-') resultat = a - b;
+  if(operator === '*') resultat = a * b;
+  if(operator === '/') resultat = a / b;
+
+  document.getElementById("resultat").innerText = "Resultat: " + resultat;
+}
+</script>
+
+</body>
+</html>
