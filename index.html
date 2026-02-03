@@ -16,38 +16,34 @@
       align-items: center;
     }
 
-    .container {
+    .calculator {
       background: white;
       padding: 20px;
       border-radius: 15px;
       width: 90%;
       max-width: 350px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-      text-align: center;
     }
 
-    h1 {
-      margin-bottom: 15px;
-    }
-
-    input {
+    .display {
       width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      font-size: 16px;
-      border-radius: 8px;
+      height: 50px;
+      font-size: 22px;
+      text-align: right;
+      padding: 10px;
+      border-radius: 10px;
       border: 1px solid #ccc;
+      margin-bottom: 15px;
     }
 
     .buttons {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
       gap: 10px;
-      margin-top: 10px;
     }
 
     button {
-      padding: 15px;
+      padding: 18px;
       font-size: 18px;
       border: none;
       border-radius: 10px;
@@ -56,59 +52,77 @@
       cursor: pointer;
     }
 
-    button:hover {
-      background: #00c6ff;
+    button.operator {
+      background: #ff9800;
     }
 
-    #resultat {
-      margin-top: 15px;
-      font-size: 20px;
-      font-weight: bold;
+    button.clear {
+      background: #f44336;
+    }
+
+    button.equal {
+      background: #4caf50;
+      grid-column: span 2;
+    }
+
+    button:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
-    <h1>Kalkulator</h1>
+<div class="calculator">
+  <input type="text" id="display" class="display" disabled>
 
-    <input type="number" id="tall1" placeholder="Skriv første tall">
-    <input type="number" id="tall2" placeholder="Skriv andre tall">
+  <div class="buttons">
+    <button class="clear" onclick="clearDisplay()">C</button>
+    <button onclick="append('/')">÷</button>
+    <button onclick="append('*')">×</button>
+    <button onclick="del()">⌫</button>
 
-    <div class="buttons">
-      <button onclick="regn('+')">+</button>
-      <button onclick="regn('-')">−</button>
-      <button onclick="regn('*')">×</button>
-      <button onclick="regn('/')">÷</button>
-    </div>
+    <button onclick="append('7')">7</button>
+    <button onclick="append('8')">8</button>
+    <button onclick="append('9')">9</button>
+    <button class="operator" onclick="append('-')">−</button>
 
-    <div id="resultat"></div>
+    <button onclick="append('4')">4</button>
+    <button onclick="append('5')">5</button>
+    <button onclick="append('6')">6</button>
+    <button class="operator" onclick="append('+')">+</button>
+
+    <button onclick="append('1')">1</button>
+    <button onclick="append('2')">2</button>
+    <button onclick="append('3')">3</button>
+    <button class="equal" onclick="calculate()">=</button>
+
+    <button onclick="append('0')">0</button>
+    <button onclick="append('.')">.</button>
   </div>
+</div>
 
 <script>
-function regn(operator) {
-  let a = Number(document.getElementById("tall1").value);
-  let b = Number(document.getElementById("tall2").value);
-  let resultat;
+let display = document.getElementById("display");
 
-  if (!a && !b) {
-    document.getElementById("resultat").innerText = "Skriv inn tall først";
-    return;
+function append(value) {
+  display.value += value;
+}
+
+function clearDisplay() {
+  display.value = "";
+}
+
+function del() {
+  display.value = display.value.slice(0, -1);
+}
+
+function calculate() {
+  try {
+    display.value = eval(display.value);
+  } catch {
+    display.value = "Feil";
   }
-
-  if (operator === '+') resultat = a + b;
-  if (operator === '-') resultat = a - b;
-  if (operator === '*') resultat = a * b;
-  if (operator === '/') {
-    if (b === 0) {
-      document.getElementById("resultat").innerText = "Kan ikke dele på 0";
-      return;
-    }
-    resultat = a / b;
-  }
-
-  document.getElementById("resultat").innerText = "Resultat: " + resultat;
 }
 </script>
 
