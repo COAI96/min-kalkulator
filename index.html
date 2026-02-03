@@ -25,16 +25,19 @@
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
 
-    .display {
-      width: 100%;
-      height: 50px;
-      font-size: 22px;
-      text-align: right;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      margin-bottom: 15px;
-    }
+   .display {
+  width: 100%;
+  height: 50px;
+  font-size: 22px;
+  text-align: right;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+
+}
+
 
     .buttons {
       display: grid;
@@ -75,25 +78,28 @@
   <input type="text" id="display" class="display" disabled>
 
 <div class="buttons">
+
   <button class="clear" onclick="clearDisplay()">C</button>
-  <button onclick="append('/')">÷</button>
-  <button onclick="append('*')">×</button>
   <button onclick="del()">⌫</button>
+  <div></div>
+  <button class="operator" onclick="appendOperator('÷')">÷</button>
 
   <button onclick="append('7')">7</button>
   <button onclick="append('8')">8</button>
   <button onclick="append('9')">9</button>
-  <button class="operator" onclick="append('-')">−</button>
+  <button class="operator" onclick="appendOperator('×')">×</button>
+  
 
   <button onclick="append('4')">4</button>
   <button onclick="append('5')">5</button>
   <button onclick="append('6')">6</button>
-  <button class="operator" onclick="append('+')">+</button>
+  <button class="operator" onclick="append('-')">−</button>
+  
 
   <button onclick="append('1')">1</button>
   <button onclick="append('2')">2</button>
   <button onclick="append('3')">3</button>
-  <div></div>
+  <button class="operator" onclick="append('+')">+</button>
 
   <div></div>
   <button onclick="append('0')">0</button>
@@ -110,6 +116,10 @@ function append(value) {
   display.value += value;
 }
 
+function appendOperator(symbol) {
+  display.value += symbol;
+}
+
 function clearDisplay() {
   display.value = "";
 }
@@ -120,25 +130,25 @@ function del() {
 
 function calculate() {
   try {
-    display.value = eval(display.value);
+    let expression = display.value
+      .replace(/×/g, '*')
+      .replace(/÷/g, '/')
+      .replace(/,/g, '.');
+
+    display.value = eval(expression);
   } catch {
     display.value = "Feil";
   }
 }
+
+function percent() {
+  if (display.value) {
+    let expression = display.value
+      .replace(/×/g, '*')
+      .replace(/÷/g, '/')
+      .replace(/,/g, '.');
+
+    display.value = eval(expression) / 100;
+  }
+}
 </script>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
