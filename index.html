@@ -1,53 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="no">
 <head>
-  <title>Min kalkulator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator</title>
+
   <style>
     body {
-      font-family: Arial;
-      background: #f2f2f2;
-      text-align: center;
-      padding-top: 50px;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    .box {
-      background: blue;
+
+    .container {
+      background: white;
       padding: 20px;
-      border-radius: 10px;
-      width: 300px;
-      margin: auto;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    }
-    input {
+      border-radius: 15px;
       width: 90%;
-      padding: 8px;
-      margin: 5px 0;
+      max-width: 350px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      text-align: center;
     }
+
+    h1 {
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
     button {
-      padding: 10px;
-      margin: 5px;
-      width: 45%;
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background: #4facfe;
+      color: white;
       cursor: pointer;
+    }
+
+    button:hover {
+      background: #00c6ff;
+    }
+
+    #resultat {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
     }
   </style>
 </head>
 
 <body>
 
-<div class="box">
-  <h2>Kalkulator</h2>
+  <div class="container">
+    <h1>Kalkulator</h1>
 
-  <input type="number" id="tall1" placeholder="Tall 1">
-  <input type="number" id="tall2" placeholder="Tall 2">
+    <input type="number" id="tall1" placeholder="Skriv første tall">
+    <input type="number" id="tall2" placeholder="Skriv andre tall">
 
-  <br>
+    <div class="buttons">
+      <button onclick="regn('+')">+</button>
+      <button onclick="regn('-')">−</button>
+      <button onclick="regn('*')">×</button>
+      <button onclick="regn('/')">÷</button>
+    </div>
 
-  <button onclick="regn('+')">+</button>
-  <button onclick="regn('-')">-</button>
-  <button onclick="regn('*')">*</button>
-  <button onclick="regn('/')">/</button>
-
-  <p id="resultat"></p>
-</div>
+    <div id="resultat"></div>
+  </div>
 
 <script>
 function regn(operator) {
@@ -55,10 +92,21 @@ function regn(operator) {
   let b = Number(document.getElementById("tall2").value);
   let resultat;
 
-  if(operator === '+') resultat = a + b;
-  if(operator === '-') resultat = a - b;
-  if(operator === '*') resultat = a * b;
-  if(operator === '/') resultat = a / b;
+  if (!a && !b) {
+    document.getElementById("resultat").innerText = "Skriv inn tall først";
+    return;
+  }
+
+  if (operator === '+') resultat = a + b;
+  if (operator === '-') resultat = a - b;
+  if (operator === '*') resultat = a * b;
+  if (operator === '/') {
+    if (b === 0) {
+      document.getElementById("resultat").innerText = "Kan ikke dele på 0";
+      return;
+    }
+    resultat = a / b;
+  }
 
   document.getElementById("resultat").innerText = "Resultat: " + resultat;
 }
@@ -66,5 +114,3 @@ function regn(operator) {
 
 </body>
 </html>
-
-
